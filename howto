@@ -1,4 +1,3 @@
-
 # Notes v1.0
 ##############################################################################################################################################
 ## This information will make it possible for you to use WSL2.0 and Cisco AnyConnect (tested with Debian/Ubuntu and AnyConnect 4.10.03104)  ##                                                                                                                                                 #
@@ -10,7 +9,6 @@
 
 
 ## Connect to VPN
-
 ## Install WSL 2 and a OS of your choice
 
 ## Terminal Powershell (admin)
@@ -18,7 +16,6 @@ wsl --install
 wsl.exe --install -d ubuntu
 
 ##Logon with the new user you created
-
 ## Terminal Linux 
 ## Setup wsl.conf
 cd /etc
@@ -56,11 +53,11 @@ $InfoCiscoAnyConnect = Get-NetAdapter | Where-Object {$_.InterfaceDescription -L
 $CiscoName = $InfoCiscoAnyConnect.Name
 $SetInterFaceMetricCiscoAnyConnect = $InfoCiscoAnyConnect
 $SetInterFaceMetricCiscoAnyConnect | Set-NetIPInterface -InterfaceMetric 6000 -Verbose
-$ResultCiscoAnyConnect = Get-NetIPInterface   | Where-Object {$_.InterfaceAlias -match $CiscoName} | select InterfaceAlias, ifIndex, AdressFamily, InterfaceMetric, Dhcp, ConnectionState
+$ResultCiscoAnyConnect = Get-NetIPInterface   | Where-Object {$_.InterfaceAlias -match $CiscoName} | select InterfaceAlias, ifIndex, AdressFamily, InterfaceMetric, Dhcp, ConnectionState
 $ResultCiscoAnyConnect
- 
- 
- 
+ 
+ 
+ 
 ## Terminal Powershell (admin)
 ## Change the priority order of network adapter for WSL
 $InfoWSL = Get-NetAdapter | Where-Object {$_.Name -Like "vEthernet (WSL)"}
@@ -79,11 +76,3 @@ $ResultWSL
 sudo /etc/resolv.conf 
 
 telnet host port
-
-
-
-
-
-
-
-
