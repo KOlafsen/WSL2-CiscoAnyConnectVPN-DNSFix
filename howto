@@ -1,0 +1,89 @@
+
+# Notes v1.0
+#############################################################################################################################
+## This information will make it possible for you to use WSL2.0 and Cisco AnyConnect (tested with debian&ubuntu)           ##
+## It makes the resolv.conf immutable with your prefered dns-servers, changes the priority of network adapters.            ##
+## Perhaps the most important thing is that after you perform this you will                                                ##
+## Be able to work&code in your favorite Unix distro using WSL 2.0 and Cisco AnyConnect without network and DNS problems.  ##
+#############################################################################################################################
+# @Kjetil Olafsen @Intility AS
+
+
+## Connect to VPN
+
+## Install WSL 2 and a OS of your choice
+
+## Terminal Powershell (admin)
+wsl --install
+wsl.exe --install -d ubuntu
+
+##Logon with the new user you created
+
+## Terminal Linux 
+## Setup wsl.conf
+cd /etc
+echo "[network]" | sudo tee wsl.conf
+echo "generateResolvConf = false" | sudo tee -a wsl.conf
+
+
+## Terminal Powershell (admin)
+## Terminate Ubuntu
+wsl --terminate Ubuntu
+
+## Terminal Linux
+## Add your nameservers to resolv.conf, this is just an example 
+cd /etc
+sudo rm -Rf resolv.conf
+echo "nameserver 192.168.1.3" | sudo tee resolv.conf
+echo "nameserver 192.168.1.4" | sudo tee -a resolv.conf
+echo "nameserver 8.8.8.8"     | sudo tee -a resolv.conf
+
+
+## Terminal Powershell (admin)
+## Terminate Ubuntu
+wsl --terminate Ubuntu
+
+## Terminal Linux
+## Make resolv.conf immutable ; )
+cd /etc
+sudo chattr +i resolv.conf
+
+
+## Terminal Powershell (admin)
+## Change the priority order of network adapter for Cisco Any Connect
+$InfoCiscoAnyConnect = Get-NetAdapter | Where-Object {$_.InterfaceDescription -Like "*Cisco AnyConnect*"}
+#$InfoCiscoAnyConnect
+$CiscoName = $InfoCiscoAnyConnect.Name
+$SetInterFaceMetricCiscoAnyConnect = $InfoCiscoAnyConnect
+$SetInterFaceMetricCiscoAnyConnect | Set-NetIPInterface -InterfaceMetric 6000 -Verbose
+$ResultCiscoAnyConnect = Get-NetIPInterface   | Where-Object {$_.InterfaceAlias -match $CiscoName} | select InterfaceAlias, ifIndex, AdressFamily, InterfaceMetric, Dhcp, ConnectionState
+$ResultCiscoAnyConnect
+ 
+ 
+ 
+## Terminal Powershell (admin)
+## Change the priority order of network adapter for WSL
+$InfoWSL = Get-NetAdapter | Where-Object {$_.Name -Like "vEthernet (WSL)"}
+#$InfoWSL
+$WSLName = $InfoWSL.Name
+$SetInterFaceMetricWSL = $InfoWSL
+$SetInterFaceMetricWSl | Set-NetIPInterface -InterfaceMetric 1 -Verbose
+$ResultWSL = Get-NetIPInterface | Where-Object {$_.InterfaceAlias -like $WSLName} | select InterfaceAlias, ifIndex, AdressFamily, InterfaceMetric, Dhcp, ConnectionState
+$ResultWSL
+
+
+## Reboot your computer and then connect to VPN and logon to your Linux OS using WSL2.0 Then check resolv.conf for name servers.
+## If the name servers you added earlier are in the list and did not disappear as they may have done in the past that's good.
+## Use telnet to verify contact with a dnsname and ping to see that dns works as intended.
+
+sudo /etc/resolv.conf 
+
+telnet host port
+
+
+
+
+
+
+
+
