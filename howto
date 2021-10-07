@@ -1,11 +1,11 @@
 
 # Notes v1.0
-#############################################################################################################################
-## This information will make it possible for you to use WSL2.0 and Cisco AnyConnect (tested with debian&ubuntu)           ##
-## It makes the resolv.conf immutable with your prefered dns-servers, changes the priority of network adapters.            ##
-## Perhaps the most important thing is that after you perform this you will                                                ##
-## Be able to work&code in your favorite Unix distro using WSL 2.0 and Cisco AnyConnect without network and DNS problems.  ##
-#############################################################################################################################
+##############################################################################################################################################
+## This information will make it possible for you to use WSL2.0 and Cisco AnyConnect (tested with Debian/Ubuntu and AnyConnect 4.10.03104)  ##                                                                                                                                                 #
+## It makes the resolv.conf immutable with your prefered dns-servers, changes the priority of network adapters.                             ##
+## Perhaps the most important thing is that after you perform this you will                                                                 ##
+## Be able to work&code in your favorite Unix distro using WSL 2.0 and Cisco AnyConnect without network and DNS problems.                   ##
+##############################################################################################################################################
 # @Kjetil Olafsen @Intility AS
 
 
