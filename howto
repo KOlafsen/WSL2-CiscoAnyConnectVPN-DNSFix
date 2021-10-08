@@ -73,6 +73,6 @@ $ResultWSL
 ## If the name servers you added earlier are in the list and did not disappear as they may have done in the past that's good.
 ## Use telnet to verify contact with a dnsname and ping to see that dns works as intended.
 
-sudo /etc/resolv.conf 
+sudo cat /etc/resolv.conf 
 
 telnet host port
